@@ -40,10 +40,10 @@ Traceback (most recent call last):
     print(tmap.parallel_diagnostics(level=3)) # type: ignore
           ^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'function' object has no attribute 'parallel_diagnostics'
-(.venv) (base) PS C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17> $env:NUMBA_DISABLE_JIT = "0"                   
+(.venv) (base) PS C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17> $env:NUMBA_DISABLE_JIT = "0"
 (.venv) (base) PS C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17> python project/parallel_check.py
 MAP
- 
+
 ================================================================================
  Parallel Accelerator Optimizing:  Function tensor_map.<locals>._map,
 C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
@@ -51,7 +51,7 @@ C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
 ================================================================================
 
 
-Parallel loop listing for  Function tensor_map.<locals>._map, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (177)        
+Parallel loop listing for  Function tensor_map.<locals>._map, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (177)
 -------------------------------------------------------------------------|loop #ID
     def _map(                                                            |
         out: Storage,                                                    |
@@ -132,7 +132,7 @@ before the loop is executed and reused inside the loop):
     - numpy.empty() is used for the allocation.
 None
 ZIP
- 
+
 ================================================================================
  Parallel Accelerator Optimizing:  Function tensor_zip.<locals>._zip,
 C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
@@ -140,7 +140,7 @@ C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
 ================================================================================
 
 
-Parallel loop listing for  Function tensor_zip.<locals>._zip, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (234)        
+Parallel loop listing for  Function tensor_zip.<locals>._zip, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (234)
 ---------------------------------------------------------------------------|loop #ID
     def _zip(                                                              |
         out: Storage,                                                      |
@@ -221,7 +221,7 @@ before the loop is executed and reused inside the loop):
     - numpy.empty() is used for the allocation.
 None
 REDUCE
- 
+
 ================================================================================
  Parallel Accelerator Optimizing:  Function tensor_reduce.<locals>._reduce,
 C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
@@ -229,7 +229,7 @@ C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
 ================================================================================
 
 
-Parallel loop listing for  Function tensor_reduce.<locals>._reduce, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (304)  
+Parallel loop listing for  Function tensor_reduce.<locals>._reduce, C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py (304)
 ------------------------------------------------------------------------------------|loop #ID
     def _reduce(                                                                    |
         out: Storage,                                                               |
@@ -289,7 +289,7 @@ before the loop is executed and reused inside the loop):
     - numpy.empty() is used for the allocation.
 None
 MATRIX MULTIPLY
- 
+
 ================================================================================
  Parallel Accelerator Optimizing:  Function _tensor_matrix_multiply,
 C:\Users\mattz\Downloads\Projects\workspace\mod3-mattz17\minitorch\fast_ops.py
