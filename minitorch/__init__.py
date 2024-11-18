@@ -1,3 +1,8 @@
+"""Package provides a comprehensive set of operations, functions, and utilities
+for tensor operations, automatic differentiation, and optimization in a custom
+numerical computation library.
+"""
+
 from .testing import MathTest, MathTestVariable  # type: ignore # noqa: F401,F403
 from .fast_ops import *  # noqa: F401,F403
 from .cuda_ops import *  # noqa: F401,F403

@@ -59,8 +59,8 @@ class Function:
         # Create a new variable from the result with a new history.
         back = None
         if need_grad:
-            back = minitorch.History(cls, ctx, vals) # type: ignore[override]
-        return minitorch.Tensor(c._tensor, back, backend=c.backend) # type: ignore[override]
+            back = minitorch.History(cls, ctx, vals)  # type: ignore[override]
+        return minitorch.Tensor(c._tensor, back, backend=c.backend)  # type: ignore[override]
 
 
 class Neg(Function):
@@ -390,9 +390,12 @@ class Permute(Function):
 
         """
         order = ctx.saved_values[0]
-        order2 = [a[0] for a in sorted(
-            enumerate([order[i] for i in range(order.size)]), key=lambda a: a[1]
-        )]
+        order2 = [
+            a[0]
+            for a in sorted(
+                enumerate([order[i] for i in range(order.size)]), key=lambda a: a[1]
+            )
+        ]
         return grad_output._new(grad_output._tensor.permute(*order2)), 0.0
 
 
@@ -484,7 +487,9 @@ class View(Function):
         assert a._tensor.is_contiguous(), "Must be contiguous to view"
         shape2 = [int(shape[i]) for i in range(shape.size)]
         return minitorch.Tensor.make(
-            a._tensor._storage, tuple(shape2), backend=a.backend # type: ignore[override]
+            a._tensor._storage,
+            tuple(shape2),
+            backend=a.backend,  # type: ignore[override]
         )
 
     @staticmethod
@@ -493,7 +498,9 @@ class View(Function):
         (original,) = ctx.saved_values
         return (
             minitorch.Tensor.make(
-                grad_output._tensor._storage, original, backend=grad_output.backend # type: ignore[override]
+                grad_output._tensor._storage,
+                original,
+                backend=grad_output.backend,  # type: ignore[override]
             ),
             0.0,
         )
@@ -549,7 +556,9 @@ def zeros(shape: UserShape, backend: TensorBackend = SimpleBackend) -> Tensor:
 
     """
     return minitorch.Tensor.make(
-        [0.0] * int(operators.prod(shape)), shape, backend=backend # type: ignore[override]
+        [0.0] * int(operators.prod(shape)),
+        shape,
+        backend=backend,  # type: ignore[override]
     )
 
 
@@ -572,9 +581,9 @@ def rand(
 
     """
     vals = [random.random() for _ in range(int(operators.prod(shape)))]
-    tensor = minitorch.Tensor.make(vals, shape, backend=backend) # type: ignore[override]
+    tensor = minitorch.Tensor.make(vals, shape, backend=backend)  # type: ignore[override]
     tensor.requires_grad_(requires_grad)
-    return tensor # type: ignore[override]
+    return tensor  # type: ignore[override]
 
 
 def _tensor(
@@ -597,9 +606,9 @@ def _tensor(
         new tensor
 
     """
-    tensor = minitorch.Tensor.make(ls, shape, backend=backend) # type: ignore[override]
+    tensor = minitorch.Tensor.make(ls, shape, backend=backend)  # type: ignore[override]
     tensor.requires_grad_(requires_grad)
-    return tensor # type: ignore[override]
+    return tensor  # type: ignore[override]
 
 
 def tensor(

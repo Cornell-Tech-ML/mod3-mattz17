@@ -319,7 +319,7 @@ class Tensor:
         """LT operation for tensors"""
         return LT.apply(self, self._ensure_tensor(t1))
 
-    def __eq__(self, t1: Tensor) -> Tensor: # type: ignore[override]
+    def __eq__(self, t1: Tensor) -> Tensor:  # type: ignore[override]
         """EQ operation for tensors"""
         return EQ.apply(self, self._ensure_tensor(t1))
 
@@ -411,6 +411,6 @@ class Tensor:
         """
         return View.apply(self, tensor(list(shape)))
 
-    def zero_grad_(self) -> None: # pragma: no cover
+    def zero_grad_(self) -> None:  # pragma: no cover
         """Set .grad to None."""
         self.grad = None

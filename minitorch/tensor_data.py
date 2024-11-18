@@ -297,7 +297,7 @@ class TensorData:
         return TensorData(
             self._storage,
             tuple([self.shape[o] for o in order]),
-            tuple([self._strides[o] for o in order])
+            tuple([self._strides[o] for o in order]),
         )
 
     def to_string(self) -> str:

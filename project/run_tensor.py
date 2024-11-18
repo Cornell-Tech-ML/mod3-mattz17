@@ -40,7 +40,7 @@ class Linear(minitorch.Module):
         batch, in_size = inputs.shape
         return (
             self.weights.value.view(1, in_size, self.out_size)
-            * inputs.view(batch, in_size, 1)   
+            * inputs.view(batch, in_size, 1)
         ).sum(1).view(batch, self.out_size) + self.bias.value.view(self.out_size)
 
 def default_log_fn(epoch, total_loss, correct, losses):
