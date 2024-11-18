@@ -552,18 +552,26 @@ def _tensor_matrix_multiply(
     """
     a_batch_stride = a_strides[0] if a_shape[0] > 1 else 0
     b_batch_stride = b_strides[0] if b_shape[0] > 1 else 0
-    # Batch dimension - fixed
+
+    # Get the current batch index using the z-dimension of the block index
     batch = cuda.blockIdx.z
 
+    # Define the block size
     BLOCK_DIM = 32
+
+    # Allocate shared memory for tiles of A and B
     a_shared = cuda.shared.array((BLOCK_DIM, BLOCK_DIM), numba.float64)
     b_shared = cuda.shared.array((BLOCK_DIM, BLOCK_DIM), numba.float64)
 
-    # The final position c[i, j]
-    i = cuda.blockIdx.x * cuda.blockDim.x + cuda.threadIdx.x
-    j = cuda.blockIdx.y * cuda.blockDim.y + cuda.threadIdx.y
+    # Compute the global indices for the output matrix
+    i = (
+        cuda.blockIdx.x * cuda.blockDim.x + cuda.threadIdx.x
+    )  # Row index in output matrix
+    j = (
+        cuda.blockIdx.y * cuda.blockDim.y + cuda.threadIdx.y
+    )  # Column index in output matrix
 
-    # The local position in the block.
+    # Compute the local indices within the current block (tile)
     pi = cuda.threadIdx.x
     pj = cuda.threadIdx.y
 
@@ -572,11 +580,13 @@ def _tensor_matrix_multiply(
     #    a) Copy into shared memory for a matrix.
     #    b) Copy into shared memory for b matrix
     #    c) Compute the dot produce for position c[i, j]
+
+    # Initialize the accumulator for the dot product result
     value = 0.0
 
     # Iterate over tiles of the shared dimension
     for k in range((a_shape[-1] + BLOCK_DIM - 1) // BLOCK_DIM):
-        # Load tile from matrix A into shared memory
+        # Load the current tile from matrix A into shared memory
         if i < a_shape[-2] and (k * BLOCK_DIM + pj) < a_shape[-1]:
             a_shared[pi, pj] = a_storage[
                 batch * a_batch_stride
@@ -584,9 +594,9 @@ def _tensor_matrix_multiply(
                 + (k * BLOCK_DIM + pj) * a_strides[-1]
             ]
         else:
-            a_shared[pi, pj] = 0.0
+            a_shared[pi, pj] = 0.0  # It is 0 if out of bounds
 
-        # Load tile from matrix B into shared memory
+        # Load the current tile from matrix B into shared memory
         if j < b_shape[-1] and (k * BLOCK_DIM + pi) < b_shape[-2]:
             b_shared[pi, pj] = b_storage[
                 batch * b_batch_stride
@@ -609,6 +619,7 @@ def _tensor_matrix_multiply(
     # Write the computed value to the output matrix
     if i < out_shape[-2] and j < out_shape[-1]:
         out_pos = batch * out_strides[0] + i * out_strides[-2] + j * out_strides[-1]
+        # Store the result in the output tensor.
         out[out_pos] = value
 
 
