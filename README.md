@@ -391,6 +391,28 @@ No allocation hoisting found
 None
 
 
+
+**Timing Script:**
+
+Timing summary
+Size: 64
+    fast: 0.00341
+    gpu: 0.00638
+Size: 128
+    fast: 0.01583
+    gpu: 0.01476
+Size: 256
+    fast: 0.09754
+    gpu: 0.05336
+Size: 512
+    fast: 1.21409
+    gpu: 0.33832
+Size: 1024
+    fast: 8.39757
+    gpu: 0.98560
+
+![image](https://github.com/user-attachments/assets/fdaf7ff4-0778-4ff9-8b5a-4ab43329da87)
+
 **Simple CPU:**
 
 
@@ -670,24 +692,3 @@ Time per epoch = 182.128 seconds / 500 epochs = 0.364256s / epoch
 
 
 ![image](https://github.com/user-attachments/assets/e8062c6b-7177-4a66-a0cf-c5aba3f56064)
-
-
-**Timing Script:**
-
-
-Timing summary
-Size: 64
-    fast: 0.00341
-    gpu: 0.00638
-Size: 128
-    fast: 0.01583
-    gpu: 0.01476
-Size: 256
-    fast: 0.09754
-    gpu: 0.05336
-Size: 512
-    fast: 1.21409
-    gpu: 0.33832
-Size: 1024
-    fast: 8.39757
-    gpu: 0.98560
