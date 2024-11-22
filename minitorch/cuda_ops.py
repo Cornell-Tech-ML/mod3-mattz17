@@ -511,14 +511,26 @@ def mm_practice(a: Tensor, b: Tensor) -> TensorData:
         TensorData: The resulting tensor from matrix multiplication, with shape `(size, size)`.
 
     """
+    # Get size of the matrix from the shape of the first tensor.
     (size, _) = a.shape
+    # Define the CUDA thread and block configuration.
     threadsperblock = (THREADS_PER_BLOCK, THREADS_PER_BLOCK)
     blockspergrid = 1
+
+    # Initialize the output tensor `out` as a flattened list of zeros and reshape it to `(size, size)`.
+    # TensorData is assumed to manage the tensor's structure and facilitate GPU processing.
     out = TensorData([0.0 for i in range(size * size)], (size, size))
+
+    # Transfer the output tensor to the GPU memory
     out.to_cuda_()
+
+    # Launch the JIT-compiled CUDA kernel with the specified grid and block configuration.
+    # This performs the matrix multiplication on the GPU, directly modifying the `out` tensor.
     jit_mm_practice[blockspergrid, threadsperblock](
         out.tuple()[0], a._tensor._storage, b._tensor._storage, size
     )
+
+    # Return out, which now contains the product of `a` and `b`.
     return out
 
 
